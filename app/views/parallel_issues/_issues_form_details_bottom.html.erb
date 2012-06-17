@@ -1,15 +1,39 @@
+<% if @issue.new_record? %>
+<%# 同時作成用の題名欄と切り替えボタン %>
+<%= link_to_function(image_tag('bullet_toggle_plus.png'),
+       "toggle_parallel_subjects();", :id => "issue_subject_toggle") %>
+<%= text_area_tag('issue[parallel_subjects]', (params[:issue] && params[:issue][:parallel_subjects]) || @issue.subject,
+      :cols => 80, :rows => 4, :style => "display: none; width: 99%;", :disabled => true) %>
+
 <%# 同時作成用の担当者欄と切り替えボタン %>
 <%= link_to_function(image_tag('bullet_toggle_plus.png'),
        "toggle_parallel_assignees();", :id => "issue_assigned_to_id_toggle") %>
 <%= select_tag('issue[parallel_assignee_ids]',
-      options_for_select(@issue.assignable_users.collect{|u| [u.name, u.id.to_s]}),
+      options_for_select(@issue.assignable_users.collect{|u| [u.name, u.id.to_s]}, params[:issue] && params[:issue][:parallel_assignee_ids]),
       :multiple => true, :style => "display: none;", :disabled => true) %>
 
 <% javascript_tag do %>
+<%# 題名の箇所へ移動させる %>
+subject_parent = $('issue_subject').parentNode;
+subject_parent.appendChild($('issue_parallel_subjects'));
+subject_parent.appendChild($('issue_subject_toggle'));
+
 <%# 担当者の箇所へ移動させる %>
 assign_parent = $('issue_assigned_to_id').parentNode;
 assign_parent.appendChild($('issue_parallel_assignee_ids'));
 assign_parent.appendChild($('issue_assigned_to_id_toggle'));
+
+<%# 題名欄を切り替える %>
+function toggle_parallel_subjects() {
+  subject = $('issue_subject');
+  parallel_subjects = $('issue_parallel_subjects');
+
+  subject.toggle();
+  parallel_subjects.toggle();
+
+  subject.disabled = !subject.disabled;
+  parallel_subjects.disabled = !parallel_subjects.disabled;
+}
 
 <%# 担当者欄を切り替える %>
 function toggle_parallel_assignees() {
@@ -22,4 +46,16 @@ function toggle_parallel_assignees() {
   assigned_to.disabled = !assigned_to.disabled;
   parallel_assignees.disabled = !parallel_assignees.disabled;
 }
+
+<% if params[:issue] %>
+  <%# フォーム値の題名が複数設定されていたら最初から表示させる %>
+  <% if params[:issue][:parallel_subjects] %>
+toggle_parallel_subjects();
+  <% end %>
+  <%# フォーム値の担当者が複数選択されていたら最初から表示させる %>
+  <% if params[:issue][:parallel_assignee_ids] %>
+toggle_parallel_assignees();
+  <% end %>
+<% end %>
+<% end %>
 <% end %>

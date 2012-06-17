@@ -1,12 +1,16 @@
 <%# トラッカー変更による画面再描画時に同時選択担当者欄を再配置する %>
 <%= render :partial => 'issues/attributes' %>
+
+<% if @issue.new_record? %>
+<%# 同時作成用の担当者欄と切り替えボタン %>
 <%= link_to_function(image_tag('bullet_toggle_plus.png'),
        "toggle_parallel_assignees();", :id => "issue_assigned_to_id_toggle") %>
 <%= select_tag('issue[parallel_assignee_ids]',
       options_for_select(@issue.assignable_users.collect{|u| [u.name, u.id.to_s]}, (params[:issue][:parallel_assignee_ids] || []).join(',').split(/,/)),
-      :multiple => true, :style => "display: none;", :disabled => true) %>
+      :multiple => true, :style => "display: none; width: 99%;", :disabled => true) %>
 
 <% javascript_tag do %>
+<%# s担当者の箇所へ移動させる %>
 assign_parent = $('issue_assigned_to_id').parentNode;
 assign_parent.appendChild($('issue_parallel_assignee_ids'));
 assign_parent.appendChild($('issue_assigned_to_id_toggle'));
@@ -14,5 +18,6 @@ assign_parent.appendChild($('issue_assigned_to_id_toggle'));
 <%# トラッカー表示前に同時選択されていたら最初から表示させる %>
 <% if params[:issue][:parallel_assignee_ids] %>
 toggle_parallel_assignees();
+<% end %>
 <% end %>
 <% end %>

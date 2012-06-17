@@ -1,25 +1,32 @@
 = Parallel Issue
 
-�������e�̃`�P�b�g��C�ӂ̒S���ҕ��A�����ɍ쐬�ł��܂��B
+同じ内容のチケットを任意の担当者分、同時に作成できます。
 
 
-== �C���X�g�[��
+== インストール
 
-1. RAILS_ROOT/vendor/plugins�ɔz�u����B
+1. RAILS_ROOT/vendor/pluginsに配置する。
 
-2. Redmine���ċN������B
-
-
-== �A���C���X�g�[��
-
-1. RAILS_ROOT/vendor/plugins����폜����B
-
-2. Redmine���ċN������B
+2. Redmineを再起動する。
 
 
-== �X�V����
+== アンインストール
 
-=== Version 0.0.,1
+1. RAILS_ROOT/vendor/pluginsから削除する。
 
-  �����[�X
-  ����łł��B
+2. Redmineを再起動する。
+
+
+== 更新履歴
+
+=== Version 0.0.2
+
+題名の複数指定機能を追加。
+担当者も複数選択すると題名数×担当者数のチケットが作成されます。
+
+新規作成や複製時以外にも、複数選択できるようになっていたので修正。
+
+=== Version 0.0.1
+
+初回リリース。
+試作版です。
