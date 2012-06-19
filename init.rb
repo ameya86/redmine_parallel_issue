@@ -2,7 +2,7 @@ require 'parallel_issue_hook'
 require 'parallel_issue_issue_patch'
 require 'parallel_issues_controller_patch'
 
-Redmine::Plugin.register :redmine_parallel_issue2 do
+Redmine::Plugin.register :redmine_parallel_issue do
   name 'Redmine Parallel Issue2 plugin'
   author 'OZAWA Yasuhiro'
   description 'Multiple create issue for many subject and assignees,'
