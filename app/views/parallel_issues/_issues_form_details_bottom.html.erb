@@ -12,7 +12,7 @@
       options_for_select(@issue.assignable_users.collect{|u| [u.name, u.id.to_s]}, params[:issue] && params[:issue][:parallel_assignee_ids]),
       :multiple => true, :style => "display: none;", :disabled => true) %>
 
-<% javascript_tag do %>
+<%= javascript_tag do %>
 <%# 題名の箇所へ移動させる %>
 subject_parent = $('issue_subject').parentNode;
 subject_parent.appendChild($('issue_parallel_subjects'));

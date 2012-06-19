@@ -9,7 +9,7 @@
       options_for_select(@issue.assignable_users.collect{|u| [u.name, u.id.to_s]}, (params[:issue][:parallel_assignee_ids] || []).join(',').split(/,/)),
       :multiple => true, :style => "display: none; width: 99%;", :disabled => true) %>
 
-<% javascript_tag do %>
+<%= javascript_tag do %>
 <%# s担当者の箇所へ移動させる %>
 assign_parent = $('issue_assigned_to_id').parentNode;
 assign_parent.appendChild($('issue_parallel_assignee_ids'));
